@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accelerometer"
-            android:textSize="10sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/accel_x"
@@ -43,7 +43,7 @@
             android:id="@+id/accel_z"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
     <LinearLayout
@@ -56,25 +56,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gyroscope"
-            android:textSize="10sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/gyro_x"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/gyro_y"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/gyro_z"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
