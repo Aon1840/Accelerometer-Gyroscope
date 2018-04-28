@@ -7,20 +7,23 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import java.text.DecimalFormat;
 
 public class SensorActivity extends AppCompatActivity {
 
     TextView accel_x,accel_y,accel_z,gyro_x,gyro_y,gyro_z;
     SensorManager sensorManager;
     Sensor accelSensor, gyroSensor;
-
+    DecimalFormat dcm = new DecimalFormat("0.0000");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
@@ -31,13 +34,14 @@ public class SensorActivity extends AppCompatActivity {
         gyro_x = findViewById(R.id.gyro_x);
         gyro_y = findViewById(R.id.gyro_y);
         gyro_z = findViewById(R.id.gyro_z);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(accelListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(gyroListener, gyroSensor, sensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(accelListener, accelSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(gyroListener, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -49,14 +53,14 @@ public class SensorActivity extends AppCompatActivity {
 
     SensorEventListener accelListener = new SensorEventListener() {
         @Override
-        public void onSensorChanged(SensorEvent event) {
-            float acc_x = event.values[0];
-            float acc_y = event.values[1];
-            float acc_z = event.values[2];
+        public void onSensorChanged(SensorEvent eventAcc) {
+            float acc_x = eventAcc.values[0];
+            float acc_y = eventAcc.values[1];
+            float acc_z = eventAcc.values[2];
 
-            accel_x.setText("X : "+(int)acc_x);
-            accel_y.setText("Y : "+(int)acc_y);
-            accel_z.setText("Z : "+(int)acc_z);
+            accel_x.setText("X : "+dcm.format(acc_x));
+            accel_y.setText("Y : "+dcm.format(acc_y));
+            accel_z.setText("Z : "+dcm.format(acc_z));
         }
 
         @Override
@@ -67,14 +71,15 @@ public class SensorActivity extends AppCompatActivity {
 
     SensorEventListener gyroListener = new SensorEventListener() {
         @Override
-        public void onSensorChanged(SensorEvent event) {
-            float gy_x = event.values[0];
-            float gy_y = event.values[1];
-            float gy_z = event.values[2];
+        public void onSensorChanged(SensorEvent eventGyro) {
+            Log.d("gyroListener","onSensorChanged pass");
+            float gy_x = eventGyro.values[0];
+            float gy_y = eventGyro.values[1];
+            float gy_z = eventGyro.values[2];
 
-            gyro_x.setText("X : "+gy_x);
-            gyro_y.setText("X : "+gy_y);
-            gyro_z.setText("X : "+gy_z);
+            gyro_x.setText("X : "+dcm.format(gy_x));
+            gyro_y.setText("Y : "+dcm.format(gy_y));
+            gyro_z.setText("Z : "+dcm.format(gy_z));
         }
 
         @Override
