@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 public class SensorActivity extends AppCompatActivity {
 
-    TextView testX,testY,testZ;
+    TextView accel_x,accel_y,accel_z,gyro_x,gyro_y,gyro_z;
     SensorManager sensorManager;
-    Sensor sensor;
+    Sensor accelSensor, gyroSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,35 +21,60 @@ public class SensorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sensor);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        testX = findViewById(R.id.testX);
-        testY = findViewById(R.id.testY);
-        testZ = findViewById(R.id.testZ);
+        accel_x = findViewById(R.id.accel_x);
+        accel_y = findViewById(R.id.accel_y);
+        accel_z = findViewById(R.id.accel_z);
+
+        gyro_x = findViewById(R.id.gyro_x);
+        gyro_y = findViewById(R.id.gyro_y);
+        gyro_z = findViewById(R.id.gyro_z);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(accelListener, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(accelListener, accelSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(gyroListener, gyroSensor, sensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(accelListener);
+        sensorManager.unregisterListener(gyroListener);
     }
 
     SensorEventListener accelListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
+            float acc_x = event.values[0];
+            float acc_y = event.values[1];
+            float acc_z = event.values[2];
 
-            testX.setText("X : "+(int)x);
-            testY.setText("Y : "+(int)y);
-            testZ.setText("Z : "+(int)z);
+            accel_x.setText("X : "+(int)acc_x);
+            accel_y.setText("Y : "+(int)acc_y);
+            accel_z.setText("Z : "+(int)acc_z);
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
+    SensorEventListener gyroListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float gy_x = event.values[0];
+            float gy_y = event.values[1];
+            float gy_z = event.values[2];
+
+            gyro_x.setText("X : "+gy_x);
+            gyro_y.setText("X : "+gy_y);
+            gyro_z.setText("X : "+gy_z);
         }
 
         @Override
